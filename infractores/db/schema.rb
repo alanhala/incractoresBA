@@ -19,14 +19,19 @@ ActiveRecord::Schema.define(version: 20150831171528) do
   create_table "reports", force: :cascade do |t|
     t.text     "post"
     t.integer  "user_id"
+    t.float    "latitude"
+    t.float    "longitude"
+    t.boolean  "is_valid"
+    t.string   "tweet_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
 
   create_table "users", force: :cascade do |t|
     t.string   "account_id"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.string   "account_name"
+    t.datetime "created_at",   null: false
+    t.datetime "updated_at",   null: false
   end
 
 end
