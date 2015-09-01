@@ -3,6 +3,11 @@
 namespace :tweets do
   desc "Load new mentions"
   task load_tweets: :environment do
-    LoadedTweets.create_reports(TWITTER.mentions_timeline)
+    if !!Report.last
+      tweets = TWITTER.mentions_timeline({ since_id: Report.last.tweet_id })
+    else
+      tweets = TWITTER.mentions_timeline
+    end
+    ReportBuilder.create_reports(tweets)
   end
 end
