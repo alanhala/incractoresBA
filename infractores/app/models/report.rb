@@ -1,5 +1,7 @@
 class Report < ActiveRecord::Base
   scope :valid_reports, -> { where(is_valid: true) }
+  scope :from_mention, -> { where(source: "mention") }
+  scope :from_hashtag, -> { where(source: "search") }
   has_many :images
   belongs_to :user
 
