@@ -3,11 +3,30 @@
 namespace :tweets do
   desc "Load new mentions"
   task load_tweets: :environment do
-    if !!Report.last
-      tweets = TWITTER.mentions_timeline({ since_id: Report.first.tweet_id })
+    mentions = load_mentions(Report.from_mention.first)
+    search = load_search(Report.from_hashtag.first)
+    ReportBuilder.create_reports(mentions, "mention")
+    ReportBuilder.create_reports(search, "search")
+  end
+
+  def load_mentions(last_report = nil)
+    if last_report
+      TWITTER.mentions({ since_id: last_report.tweet_id })
     else
-      tweets = TWITTER.mentions_timeline
+      TWITTER.mentions
     end
-    ReportBuilder.create_reports(tweets)
+  end
+
+  def load_search(last_report = nil)
+    hashtags = []
+    if last_report
+      search = TWITTER.search("#infractoresba", { since_id: last_report.tweet_id })
+    else
+      search = TWITTER.search("#infractoresba")
+    end
+    search.each do |tweet|
+      hashtags << tweet
+    end
+    return hashtags
   end
 end
