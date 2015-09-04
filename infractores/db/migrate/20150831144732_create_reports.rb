@@ -7,6 +7,7 @@ class CreateReports < ActiveRecord::Migration
       t.float :longitude
       t.boolean :is_valid
       t.string :tweet_id
+      t.string :source
 
       t.timestamps null: false
     end

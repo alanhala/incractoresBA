@@ -30,6 +30,7 @@ ActiveRecord::Schema.define(version: 20150902152953) do
     t.float    "longitude"
     t.boolean  "is_valid"
     t.string   "tweet_id"
+    t.string   "source"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
